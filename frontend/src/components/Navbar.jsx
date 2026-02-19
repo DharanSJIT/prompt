@@ -32,10 +32,10 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', href: '/', type: 'link' },
-    { name: 'About', href: 'about', type: 'scroll' },
-    { name: 'Events', href: 'events', type: 'scroll' },
-    { name: 'Team', href: 'team', type: 'scroll' },
-    { name: 'Contact', href: 'contact', type: 'scroll' },
+    { name: 'About', href: '/about', type: 'link' },
+    { name: 'Events', href: '/events', type: 'link' },
+    { name: 'Team', href: '/team', type: 'link' },
+    { name: 'Contact', href: '/contact', type: 'link' },
   ];
 
   const chapters = [
