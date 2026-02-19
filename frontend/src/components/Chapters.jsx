@@ -38,7 +38,7 @@ const Chapters = () => {
 
             return (
                 <div key={chapter.id} className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 relative top-0 hover:-top-2 flex flex-col h-full">
-                <div className={`h-2 w-full ${colorClass}`}></div>
+                {/* <div className={`h-2 w-full ${colorClass}`}></div> */}
                 <div className="p-8 flex-grow flex flex-col">
                     <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-white shadow-md transition-transform transform group-hover:scale-110 ${colorClass} bg-opacity-90`}>
                     {iconMap[chapter.id] || <Cpu className="w-8 h-8" />}

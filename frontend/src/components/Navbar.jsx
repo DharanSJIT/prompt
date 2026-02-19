@@ -72,9 +72,12 @@ const Navbar = () => {
                 onMouseEnter={() => setIsDropdownOpen(true)}
                 onMouseLeave={() => setIsDropdownOpen(false)}
             >
-                <button className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-ieee-blue ${scrolled || !isHome || true ? 'text-gray-700' : 'text-gray-100 hover:text-white'}`}>
+                <Link 
+                    to="/chapters" 
+                    className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-ieee-blue ${scrolled || !isHome || true ? 'text-gray-700' : 'text-gray-100 hover:text-white'}`}
+                >
                     Chapters <ChevronDown className="w-4 h-4" />
-                </button>
+                </Link>
                 <div className={`absolute top-full left-0 w-64 bg-white shadow-xl rounded-xl border border-gray-100 py-2 transform transition-all duration-200 origin-top-left ${isDropdownOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
                     {chapters.map((chapter) => (
                         <Link 
@@ -147,7 +150,9 @@ const Navbar = () => {
             </Link>
             
             <div className="px-3 py-2">
-                <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Chapters</div>
+                <Link to="/chapters" onClick={() => setIsOpen(false)} className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 hover:text-ieee-blue">
+                    Chapters
+                </Link>
                 <div className="space-y-1 pl-2 border-l-2 border-gray-100">
                     {chapters.map((chapter) => (
                         <Link 

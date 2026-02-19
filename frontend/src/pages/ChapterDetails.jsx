@@ -77,17 +77,17 @@ const ChapterDetails = () => {
             </div>
 
             {/* Navigation Tabs */}
-            <div className="sticky top-20 z-40 bg-white border-b border-gray-200 shadow-sm">
+            <div className="sticky top-20 z-40 bg-white border-b border-gray-200 shadow-sm/50 backdrop-blur-md bg-white/95">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex overflow-x-auto space-x-8 no-scrollbar">
-                        {['overview', 'publications', 'team', 'events'].map((tab) => (
+                    <div className="flex overflow-x-auto gap-4 py-3 no-scrollbar">
+                        {['overview', 'publications', 'team', 'events', 'join'].map((tab) => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors capitalize ${
+                                className={`whitespace-nowrap px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 capitalize ${
                                     activeTab === tab
-                                        ? `${theme.border} ${theme.text}`
-                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        ? `${theme.bg} text-white shadow-md transform scale-105`
+                                        : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                                 }`}
                             >
                                 {tab}
@@ -253,6 +253,40 @@ const ChapterDetails = () => {
                     </div>
                 )}
 
+                {/* Join Tab */}
+                {activeTab === 'join' && (
+                    <div className="animate-fade-in max-w-4xl mx-auto text-center">
+                        <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full ${theme.light} mb-8 animate-bounce-slow`}>
+                            <User className={`w-10 h-10 ${theme.text}`} />
+                        </div>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6 font-heading">Become a Member</h2>
+                        <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+                            Join the {chapter.name} and get exclusive access to workshops, research opportunities, and a global network of professionals.
+                        </p>
+
+                        <div className="grid md:grid-cols-3 gap-8 mb-12 text-left">
+                            <div className="p-6 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                <h3 className={`text-lg font-bold mb-3 ${theme.text}`}>Networking</h3>
+                                <p className="text-sm text-gray-600">Connect with industry leaders and like-minded peers.</p>
+                            </div>
+                            <div className="p-6 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                <h3 className={`text-lg font-bold mb-3 ${theme.text}`}>Resources</h3>
+                                <p className="text-sm text-gray-600">Access to IEEE Xplore, magazines, and technical journals.</p>
+                            </div>
+                            <div className="p-6 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                <h3 className={`text-lg font-bold mb-3 ${theme.text}`}>Discounts</h3>
+                                <p className="text-sm text-gray-600">Reduced rates for conferences and certification exams.</p>
+                            </div>
+                        </div>
+
+                        <button className={`inline-flex items-center px-8 py-4 rounded-xl text-lg font-bold text-white ${theme.bg} ${theme.hover} transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1`}>
+                            Join {chapter.acronym} Now <ArrowRight className="ml-2 w-5 h-5" />
+                        </button>
+                        <p className="mt-6 text-sm text-gray-400">
+                            *Membership requires an active IEEE Student Membership.
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );
