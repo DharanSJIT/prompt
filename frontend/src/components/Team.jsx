@@ -2,16 +2,23 @@ import React from 'react';
 import { Linkedin, Mail, Twitter } from 'lucide-react';
 
 const team = [
-  {
-    name: 'Shanmathi',
+    {
+    name: 'Yogashree',
     role: 'Chairperson',
-    image: 'https://ik.imagekit.io/ChrisHalden/image1.png',
+    image: 'https://ik.imagekit.io/ChrisHalden/image.png',
     socials: { linkedin: '#', twitter: '#', mail: '#' },
   },
+  
   {
     name: 'Saravanakrishnan',
     role: 'Vice Chairperson',
     image: 'https://ik.imagekit.io/ChrisHalden/sara',
+    socials: { linkedin: '#', twitter: '#', mail: '#' },
+  },
+  {
+    name: 'Shanmathi',
+    role: 'WebMaster',
+    image: 'https://ik.imagekit.io/ChrisHalden/image1.png',
     socials: { linkedin: '#', twitter: '#', mail: '#' },
   },
   
@@ -21,12 +28,7 @@ const team = [
     image: 'https://ik.imagekit.io/ChrisHalden/VIS',
     socials: { linkedin: '#', twitter: '#', mail: '#' },
   },
-  {
-    name: 'Yogashree',
-    role: 'Webmaster',
-    image: 'https://ik.imagekit.io/ChrisHalden/image.png',
-    socials: { linkedin: '#', twitter: '#', mail: '#' },
-  },
+
 ];
 
 const Team = () => {
