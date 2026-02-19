@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calendar, ArrowRight, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const NewsSection = () => {
   const newsItems = [
@@ -41,9 +42,9 @@ const NewsSection = () => {
               <span className="block text-ieee-blue font-bold tracking-wider uppercase text-sm mb-2">Latest Updates</span>
               <h2 className="text-3xl md:text-4xl font-heading font-extrabold text-gray-900">News & Announcements</h2>
            </div>
-           <a href="#" className="hidden md:flex items-center text-ieee-blue font-semibold hover:text-blue-700 transition-colors">
+           <Link to="/news" className="hidden md:flex items-center text-ieee-blue font-semibold hover:text-blue-700 transition-colors">
               View All News <ArrowRight className="ml-2 w-4 h-4" />
-           </a>
+           </Link>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -82,9 +83,9 @@ const NewsSection = () => {
         </div>
 
          <div className="mt-8 text-center md:hidden">
-            <a href="#" className="inline-flex items-center text-ieee-blue font-semibold hover:text-blue-700 transition-colors">
+            <Link to="/news" className="inline-flex items-center text-ieee-blue font-semibold hover:text-blue-700 transition-colors">
               View All News <ArrowRight className="ml-2 w-4 h-4" />
-           </a>
+           </Link>
          </div>
       </div>
     </section>

@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import ChapterDetails from './pages/ChapterDetails';
 // import ChaptersPage from './pages/ChaptersPage'; // New Import
 import AboutPage from './pages/About';
+import NewsPage from './pages/NewsPage';
+import ProjectsPage from './pages/ProjectsPage';
 import EventsPage from './pages/EventsPage';
 import TeamPage from './pages/Team';
 import ContactPage from './pages/Contact';
@@ -20,6 +22,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<AboutPage />} />
                 {/* <Route path="/chapters" element={<ChaptersPage />} />  */}
+                <Route path="/news" element={<NewsPage />} />
+                <Route path="/projects" element={<ProjectsPage />} />
                 <Route path="/events" element={<EventsPage />} />
                 <Route path="/team" element={<TeamPage />} />
                 <Route path="/gallery" element={<GalleryPage />} />
