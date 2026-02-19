@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,41 +20,103 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isHome = location.pathname === '/';
+
+  const scrollToSection = (id) => {
+    if (!isHome) return; // Let Link handle navigation
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const navLinks = [
-    { name: 'Home', href: '#hero' },
-    { name: 'About', href: '#about' },
-    { name: 'Chapters', href: '#chapters' },
-    { name: 'Events', href: '#events' },
-    { name: 'Team', href: '#team' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/', type: 'link' },
+    { name: 'About', href: 'about', type: 'scroll' },
+    { name: 'Events', href: 'events', type: 'scroll' },
+    { name: 'Team', href: 'team', type: 'scroll' },
+    { name: 'Contact', href: 'contact', type: 'scroll' },
+  ];
+
+  const chapters = [
+    { name: 'Computational Intelligence', id: 'cis' },
+    { name: 'Circuits and Systems', id: 'cass' },
+    { name: 'Systems, Man, & Cybernetics', id: 'smcs' },
+    { name: 'Information Theory', id: 'its' },
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5 text-white'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled || !isHome ? 'bg-white/95 backdrop-blur-md shadow-md py-3 text-gray-900 border-b border-gray-100' : 'bg-transparent py-5 text-white'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center gap-2">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl ${scrolled ? 'bg-ieee-blue text-white' : 'bg-white text-ieee-blue'}`}>
+          <Link to="/" className="flex-shrink-0 flex items-center gap-2 group">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl transition-colors ${scrolled || !isHome ? 'bg-ieee-blue text-white' : 'bg-white text-ieee-blue group-hover:bg-blue-50'}`}>
               IE
             </div>
-            <div className={`font-heading font-bold text-xl tracking-tight ${scrolled ? 'text-ieee-dark' : 'text-white'}`}>
-              IEEE <span className="font-medium opacity-90">Student Branch</span>
+            <div className={`font-heading font-bold text-xl tracking-tight ${scrolled || !isHome ? 'text-ieee-dark' : 'text-white'}`}>
+              IEEE <span className="font-medium opacity-90 hidden sm:inline">Student Branch</span>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8 items-center">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-ieee-blue ${scrolled ? 'text-gray-700' : 'text-gray-100 hover:text-white'}`}
-              >
-                {link.name}
-              </a>
+          <div className="hidden md:flex space-x-6 items-center">
+            <Link to="/" className={`text-sm font-medium transition-colors hover:text-ieee-blue ${scrolled || !isHome ? 'text-gray-700' : 'text-gray-100 hover:text-white'}`}>
+                Home
+            </Link>
+            
+            {/* Chapters Dropdown */}
+            <div 
+                className="relative group"
+                onMouseEnter={() => setIsDropdownOpen(true)}
+                onMouseLeave={() => setIsDropdownOpen(false)}
+            >
+                <button className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-ieee-blue ${scrolled || !isHome ? 'text-gray-700' : 'text-gray-100 hover:text-white'}`}>
+                    Chapters <ChevronDown className="w-4 h-4" />
+                </button>
+                <div className={`absolute top-full left-0 w-64 bg-white shadow-xl rounded-xl border border-gray-100 py-2 transform transition-all duration-200 origin-top-left ${isDropdownOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
+                    {chapters.map((chapter) => (
+                        <Link 
+                            key={chapter.id} 
+                            to={`/chapter/${chapter.id}`}
+                            className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-ieee-blue transition-colors border-b border-gray-50 last:border-0"
+                        >
+                            {chapter.name}
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
+            {navLinks.slice(1).map((link) => (
+              link.type === 'scroll' ? (
+                  isHome ? (
+                    <button 
+                        key={link.name} 
+                        onClick={() => scrollToSection(link.href)}
+                        className={`text-sm font-medium transition-colors hover:text-ieee-blue ${scrolled || !isHome ? 'text-gray-700' : 'text-gray-100 hover:text-white'}`}
+                    >
+                        {link.name}
+                    </button>
+                  ) : (
+                    <Link 
+                        key={link.name} 
+                        to={`/#${link.href}`}
+                        className={`text-sm font-medium transition-colors hover:text-ieee-blue ${scrolled || !isHome ? 'text-gray-700' : 'text-gray-100 hover:text-white'}`}
+                    >
+                        {link.name}
+                    </Link>
+                  )
+              ) : (
+                <Link
+                    key={link.name}
+                    to={link.href}
+                    className={`text-sm font-medium transition-colors hover:text-ieee-blue ${scrolled || !isHome ? 'text-gray-700' : 'text-gray-100 hover:text-white'}`}
+                >
+                    {link.name}
+                </Link>
+              )
             ))}
-            <button className={`px-5 py-2 rounded-full text-sm font-semibold transition-all shadow-sm hover:shadow-md ${scrolled ? 'bg-ieee-blue text-white hover:bg-blue-700' : 'bg-white text-ieee-blue hover:bg-gray-100'}`}>
+            <button className={`px-5 py-2 rounded-full text-sm font-semibold transition-all shadow-sm hover:shadow-md ${scrolled || !isHome ? 'bg-ieee-blue text-white hover:bg-blue-700' : 'bg-white text-ieee-blue hover:bg-gray-100'}`}>
               Join IEEE
             </button>
           </div>
@@ -60,7 +125,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-md ${scrolled ? 'text-gray-700 hover:text-ieee-blue' : 'text-white hover:text-gray-200'}`}
+              className={`p-2 rounded-md ${scrolled || !isHome ? 'text-gray-700 hover:text-ieee-blue' : 'text-white hover:text-gray-200'}`}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -70,20 +135,58 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white shadow-lg absolute w-full top-full left-0 border-t border-gray-100">
-          <div className="px-4 pt-2 pb-6 space-y-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-ieee-blue hover:bg-blue-50"
+        <div className="md:hidden bg-white shadow-lg absolute w-full top-full left-0 border-t border-gray-100 h-screen overflow-y-auto pb-20">
+          <div className="px-4 pt-4 space-y-2">
+            <Link 
+                to="/" 
+                className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
                 onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </a>
+            >
+                Home
+            </Link>
+            
+            <div className="px-3 py-2">
+                <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Chapters</div>
+                <div className="space-y-1 pl-2 border-l-2 border-gray-100">
+                    {chapters.map((chapter) => (
+                        <Link 
+                            key={chapter.id} 
+                            to={`/chapter/${chapter.id}`}
+                            className="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-ieee-blue hover:bg-blue-50"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            {chapter.name}
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
+            {navLinks.slice(1).map((link) => (
+               isHome ? (
+                    <button
+                        key={link.name}
+                        onClick={() => {
+                            scrollToSection(link.href);
+                            setIsOpen(false);
+                        }}
+                        className="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-ieee-blue hover:bg-gray-50"
+                    >
+                        {link.name}
+                    </button>
+               ) : (
+                   <Link
+                        key={link.name}
+                        to={`/#${link.href}`}
+                        className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-ieee-blue hover:bg-gray-50"
+                        onClick={() => setIsOpen(false)}
+                    >
+                        {link.name}
+                    </Link>
+               )
             ))}
-            <div className="pt-4">
-              <button className="w-full text-center px-5 py-3 rounded-lg bg-ieee-blue text-white font-semibold hover:bg-blue-700">
+            
+            <div className="pt-4 px-3">
+              <button className="w-full text-center px-5 py-3 rounded-lg bg-ieee-blue text-white font-semibold hover:bg-blue-700 shadow-md">
                 Join IEEE
               </button>
             </div>
@@ -95,3 +198,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
